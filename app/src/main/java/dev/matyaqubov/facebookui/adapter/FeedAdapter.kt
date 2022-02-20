@@ -269,6 +269,7 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
                     setImageResource(photos[2])
                     params.setMargins(5, 5, 5, 5)
                     adjustViewBounds = true
+                    scaleType=ImageView.ScaleType.CENTER_CROP
                     layoutParams = params
 
                 }
