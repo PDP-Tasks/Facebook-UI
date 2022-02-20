@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import dev.matyaqubov.facebookui.R
+import dev.matyaqubov.facebookui.R.color.background
 import dev.matyaqubov.facebookui.model.Feed
 import dev.matyaqubov.facebookui.model.Story
 
@@ -478,7 +479,8 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
-                    setTextColor(Color.GREEN)
+                    setTextColor(Color.WHITE)
+                    setBackgroundResource(R.color.background)
                     gravity=Gravity.CENTER
                     textSize=30f
                     text = (photos.size - 5).toString()+"+"
