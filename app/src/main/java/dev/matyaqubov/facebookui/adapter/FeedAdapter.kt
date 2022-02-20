@@ -2,6 +2,7 @@ package dev.matyaqubov.facebookui.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
@@ -63,13 +64,14 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             holder.iv_profile.setImageResource(feed.post!!.profile)
             holder.tv_fullname.text = feed.post!!.fullname
             val ll = holder.ll_photo_list1
-            ll.addView(createItems(context,feed.post!!.photos))
+            ll.removeAllViews()
+            ll.addView(createItems(context, feed.post!!.photos))
 
         }
     }
 
     private fun createItems(context: Context, photos: ArrayList<Int>): LinearLayout {
-
+        Log.d("createItems: ", "photos: ${photos.size} ")
         val all = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             val parms = LinearLayout.LayoutParams(
@@ -269,7 +271,7 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
                     setImageResource(photos[2])
                     params.setMargins(5, 5, 5, 5)
                     adjustViewBounds = true
-                    scaleType=ImageView.ScaleType.CENTER_CROP
+                    scaleType = ImageView.ScaleType.CENTER_CROP
                     layoutParams = params
 
                 }
@@ -375,6 +377,119 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
 
             else -> {
 
+                val tempLinearLayout = LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    val parms = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    parms.setMargins(0, 0, 0, 0)
+                    layoutParams = parms
+                }
+                val imageView = ImageView(context).apply {
+                    var params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1.0f
+                    )
+                    setImageResource(photos[0])
+                    params.setMargins(5, 5, 5, 5)
+                    adjustViewBounds = true
+                    layoutParams = params
+
+                }
+
+                val imageView2 = ImageView(context).apply {
+                    var params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1.0f
+                    )
+                    setImageResource(photos[1])
+                    params.setMargins(5, 5, 5, 5)
+                    adjustViewBounds = true
+                    layoutParams = params
+
+                }
+                tempLinearLayout.addView(imageView)
+                tempLinearLayout.addView(imageView2)
+
+                val templl = LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    val parms = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    parms.setMargins(0, 0, 0, 0)
+                    layoutParams = parms
+                }
+                val imageView3 = ImageView(context).apply {
+                    var params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1.0f
+                    )
+                    setImageResource(photos[2])
+                    params.setMargins(5, 5, 5, 5)
+                    adjustViewBounds = true
+                    layoutParams = params
+
+                }
+
+                val imageView4 = ImageView(context).apply {
+                    var params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1.0f
+                    )
+                    setImageResource(photos[2])
+                    params.setMargins(5, 5, 5, 5)
+                    adjustViewBounds = true
+                    layoutParams = params
+
+                }
+
+                val imageView5 = ImageView(context).apply {
+                    var params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1.0f
+                    )
+                    setImageResource(photos[2])
+                    params.setMargins(5, 5, 5, 5)
+                    adjustViewBounds = true
+                    layoutParams = params
+
+                }
+
+                val frameLayout = FrameLayout(context).apply {
+                    val parms = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+                    parms.setMargins(0, 0, 0, 0)
+
+                    layoutParams = parms
+                }
+
+                val textView = TextView(context).apply {
+                    val params = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                    setTextColor(Color.GREEN)
+                    gravity=Gravity.CENTER
+                    textSize=30f
+                    text = (photos.size - 5).toString()+"+"
+                }
+                templl.addView(imageView3)
+                templl.addView(imageView4)
+                frameLayout.addView(imageView5)
+                frameLayout.addView(textView)
+                templl.addView(frameLayout)
+                all.addView(tempLinearLayout)
+                all.addView(templl)
             }
 
         }
@@ -399,6 +514,8 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         var iv_profile = view.findViewById<ShapeableImageView>(R.id.iv_profile)
         var tv_fullname = view.findViewById<TextView>(R.id.tv_fullname)
         var ll_photo_list1 = view.findViewById<LinearLayout>(R.id.ll_photo_list1)
+
+        var isFirst = false
 
     }
 

@@ -46,14 +46,21 @@ private lateinit var recyclerView: RecyclerView
         feeds.add(Feed(stories))
         //Post
 
+        //1
         feeds.add(Feed(Post(R.drawable.my_image,"Bogibek", arrayListOf(R.drawable.post_image_1))))
-        feeds.add(Feed(Post(R.drawable.profile_bogibek,"Matyaqubov", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1))))
+        //2
         feeds.add(Feed(Post(R.drawable.profile_ogabek,"Ogabek Dev", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1))))
+        //3
         feeds.add(Feed(Post(R.drawable.profile_mine,"Jonibek", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
+        //4
         feeds.add(Feed(Post(R.drawable.profile_saidahmad,"Saidahmad", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
+        //5
         feeds.add(Feed(Post(R.drawable.profile_samandar,"Samandar", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
-        feeds.add(Feed(Post(R.drawable.profile_nazirov,"Nazirov", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
-        feeds.add(Feed(Post(R.drawable.profile_azizbek,"Azizbek", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
+        //6
+        feeds.add(Feed(Post(R.drawable.profile_bogibek,"Matyaqubov", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
+        //8
+        feeds.add(Feed(Post(R.drawable.profile_azizbek,"Azizbek", arrayListOf(R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1,R.drawable.post_image_1))))
+
 
         return feeds
     }
