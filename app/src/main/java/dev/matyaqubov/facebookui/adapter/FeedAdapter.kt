@@ -1,5 +1,6 @@
 package dev.matyaqubov.facebookui.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -11,24 +12,33 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import dev.matyaqubov.facebookui.R
 import dev.matyaqubov.facebookui.R.color.background
+import dev.matyaqubov.facebookui.helper.MyCLickListener
 import dev.matyaqubov.facebookui.model.Feed
 import dev.matyaqubov.facebookui.model.Story
 
 class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var myClick:(() -> Unit)? = null
+
     private val TYPE_ITEM_HEAD = 0
     private val TYPE_ITEM_STORY = 1
     private val TYPE_ITEM_POST = 2
+    private val TYPE_ITEM_POST_LINK = 3
 
     override fun getItemViewType(position: Int): Int {
         var feed = items[position]
         if (feed.isHeader) return TYPE_ITEM_HEAD
         else if (feed.stories.size > 0) return TYPE_ITEM_STORY
-        else return TYPE_ITEM_POST
+        else if (items[position].post!!.website != "") {
+            return TYPE_ITEM_POST_LINK
+        } else {
+            return TYPE_ITEM_POST
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -40,7 +50,11 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_feed_story, parent, false)
             return StoryViewHolder(context, view)
-        } else {
+        } else if (viewType == TYPE_ITEM_POST_LINK){
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post_link, parent, false)
+            return PostLinkViewHolder(view)
+        } else{
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post, parent, false)
             return PostViewHolder(view)
@@ -52,6 +66,9 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         val feed = items[position]
 
         if (holder is HeadViewHolder) {
+            holder.tv_mind.setOnClickListener {
+                myClick?.invoke()
+            }
 
         }
 
@@ -69,6 +86,16 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             ll.addView(createItems(context, feed.post!!.photos))
 
         }
+
+        if (holder is PostLinkViewHolder) {
+            holder.iv_profile.setImageResource(feed.post!!.profile)
+            holder.tv_fullname.text = feed.post!!.fullname
+            Glide.with(context).load(feed.post!!.photo).into(holder.iv_post)
+            holder.tv_title.text=feed.post!!.title
+            holder.tv_post.text=feed.post!!.post
+            holder.tv_website.text=feed.post!!.website
+        }
+
     }
 
     private fun createItems(context: Context, photos: ArrayList<Int>): LinearLayout {
@@ -481,9 +508,9 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
                     )
                     setTextColor(Color.WHITE)
                     setBackgroundResource(R.color.background)
-                    gravity=Gravity.CENTER
-                    textSize=30f
-                    text = (photos.size - 5).toString()+"+"
+                    gravity = Gravity.CENTER
+                    textSize = 30f
+                    text = (photos.size - 5).toString() + "+"
                 }
                 templl.addView(imageView3)
                 templl.addView(imageView4)
@@ -510,6 +537,7 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
 
     class HeadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        var tv_mind=view.findViewById<TextView>(R.id.tv_mind)
     }
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -517,7 +545,17 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         var tv_fullname = view.findViewById<TextView>(R.id.tv_fullname)
         var ll_photo_list1 = view.findViewById<LinearLayout>(R.id.ll_photo_list1)
 
-        var isFirst = false
+
+    }
+
+    class PostLinkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var iv_profile = view.findViewById<ShapeableImageView>(R.id.iv_profile)
+        var tv_fullname = view.findViewById<TextView>(R.id.tv_fullname)
+        var tv_title=view.findViewById<TextView>(R.id.tv_title)
+        var tv_website=view.findViewById<TextView>(R.id.tv_website)
+        var iv_post=view.findViewById<ImageView>(R.id.iv_post)
+        var tv_post=view.findViewById<TextView>(R.id.tv_post)
+
 
     }
 

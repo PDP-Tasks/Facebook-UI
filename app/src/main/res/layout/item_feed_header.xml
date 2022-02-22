@@ -21,6 +21,7 @@
             app:shapeAppearanceOverlay="@style/circle"/>
 
         <TextView
+            android:id="@+id/tv_mind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

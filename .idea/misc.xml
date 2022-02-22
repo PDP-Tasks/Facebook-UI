@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_cancel_presentation_24.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/ic_baseline_photo.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/ic_like.xml" value="0.2203125" />
@@ -12,9 +13,11 @@
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/shape_border_circle.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/shape_border_rounded.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/item_feed_header.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/item_feed_post.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_feed_post_link.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_story.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/item_story_view.xml" value="0.75" />
       </map>
