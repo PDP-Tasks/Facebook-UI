@@ -43,7 +43,7 @@ var createPostLauncher=registerForActivityResult(ActivityResultContracts.StartAc
     if (result.resultCode==Activity.RESULT_OK){
         val data=result.data
         val post:Post= data!!.getParcelableExtra<Post>("post") as Post
-        feeds.add(Feed(post))
+        feeds.add(2,Feed(post))
         adapter.notifyDataSetChanged()
     }
 }

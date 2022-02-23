@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.webkit.URLUtil
 import android.widget.*
@@ -29,6 +30,7 @@ class CreatePostActivity : AppCompatActivity() {
     private lateinit var website:String
     private lateinit var imgUrl: String
     private lateinit var ll_post: LinearLayout
+    private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -36,6 +38,7 @@ class CreatePostActivity : AppCompatActivity() {
     }
 
     private fun initviews() {
+        progressBar=findViewById(R.id.progressbar)
         ll_post = findViewById(R.id.ll_post_photo_title)
         tv_title = findViewById(R.id.tv_title)
         tv_website = findViewById(R.id.tv_website)
@@ -48,7 +51,7 @@ class CreatePostActivity : AppCompatActivity() {
         et_post.addTextChangedListener {
             var post = it.toString()
             if (post!=""){
-                btn_post.isEnabled = true
+
                 checkURL(post)
             } else {
                 btn_post.isEnabled=false
@@ -81,6 +84,7 @@ class CreatePostActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     fun gettingData(url: String) {
+        progressBar.visibility=View.VISIBLE
         Thread(Runnable {
             try {
                 val doc: Document =
@@ -105,6 +109,7 @@ class CreatePostActivity : AppCompatActivity() {
                     tv_title.text = title
                     tv_website.text=website
                     ll_post.visibility = View.VISIBLE
+                    progressBar.visibility=View.GONE
                 } catch (e:Exception){
                     ll_post.visibility=View.GONE
                 }
@@ -114,8 +119,9 @@ class CreatePostActivity : AppCompatActivity() {
     private fun checkURL(text: String) {
         val str = text.split(" ").toTypedArray()
         for (s in str) {
-            if (URLUtil.isValidUrl(s) && s.length>11) {
+            if (Patterns.WEB_URL.matcher(s).matches()) {
                 gettingData(s)
+                btn_post.isEnabled = true
                 break
             } else{
                 ll_post.visibility=View.GONE

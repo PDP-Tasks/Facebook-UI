@@ -23,7 +23,7 @@ import dev.matyaqubov.facebookui.model.Story
 class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var myClick:(() -> Unit)? = null
+    var myClick: (() -> Unit)? = null
 
     private val TYPE_ITEM_HEAD = 0
     private val TYPE_ITEM_STORY = 1
@@ -50,11 +50,12 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_feed_story, parent, false)
             return StoryViewHolder(context, view)
-        } else if (viewType == TYPE_ITEM_POST_LINK){
+        } else if (viewType == TYPE_ITEM_POST_LINK) {
             val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post_link, parent, false)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_feed_post_link, parent, false)
             return PostLinkViewHolder(view)
-        } else{
+        } else {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_feed_post, parent, false)
             return PostViewHolder(view)
@@ -73,8 +74,14 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
         }
 
         if (holder is StoryViewHolder) {
-            var recyclerView = holder.recyclerView
-            refreshAdapter(feed.stories, recyclerView)
+
+            holder.apply {
+                if (adapter == null){
+                    adapter = StoryAdapter(context, feed.stories)
+                    recyclerView.adapter = adapter
+                }
+
+            }
 
         }
 
@@ -91,9 +98,9 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
             holder.iv_profile.setImageResource(feed.post!!.profile)
             holder.tv_fullname.text = feed.post!!.fullname
             Glide.with(context).load(feed.post!!.photo).into(holder.iv_post)
-            holder.tv_title.text=feed.post!!.title
-            holder.tv_post.text=feed.post!!.post
-            holder.tv_website.text=feed.post!!.website
+            holder.tv_title.text = feed.post!!.title
+            holder.tv_post.text = feed.post!!.post
+            holder.tv_website.text = feed.post!!.website
         }
 
     }
@@ -537,7 +544,7 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
 
     class HeadViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var tv_mind=view.findViewById<TextView>(R.id.tv_mind)
+        var tv_mind = view.findViewById<TextView>(R.id.tv_mind)
     }
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -551,16 +558,17 @@ class FeedAdapter(var context: Context, var items: ArrayList<Feed>) :
     class PostLinkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var iv_profile = view.findViewById<ShapeableImageView>(R.id.iv_profile)
         var tv_fullname = view.findViewById<TextView>(R.id.tv_fullname)
-        var tv_title=view.findViewById<TextView>(R.id.tv_title)
-        var tv_website=view.findViewById<TextView>(R.id.tv_website)
-        var iv_post=view.findViewById<ImageView>(R.id.iv_post)
-        var tv_post=view.findViewById<TextView>(R.id.tv_post)
+        var tv_title = view.findViewById<TextView>(R.id.tv_title)
+        var tv_website = view.findViewById<TextView>(R.id.tv_website)
+        var iv_post = view.findViewById<ImageView>(R.id.iv_post)
+        var tv_post = view.findViewById<TextView>(R.id.tv_post)
 
 
     }
 
     class StoryViewHolder(var context: Context, val view: View) : RecyclerView.ViewHolder(view) {
         var recyclerView: RecyclerView
+        var adapter: StoryAdapter?=null
 
         init {
             recyclerView = view.findViewById(R.id.recycler_view)
