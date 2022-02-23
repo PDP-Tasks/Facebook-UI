@@ -1,8 +1,10 @@
 package dev.matyaqubov.facebookui.activity
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.matyaqubov.facebookui.R
@@ -37,11 +39,18 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+var createPostLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+    if (result.resultCode==Activity.RESULT_OK){
+        val data=result.data
+        val post:Post= data!!.getParcelableExtra<Post>("post") as Post
+        feeds.add(Feed(post))
+        adapter.notifyDataSetChanged()
+    }
+}
 
     fun openCreatePost() {
         val intent = Intent(this, CreatePostActivity::class.java)
-        startActivityForResult(intent, 1001)
+        createPostLauncher.launch(intent)
     }
 
 
